@@ -13,13 +13,8 @@ model = network.load_model("output/model.json")
 
 network.load_weights(model, "output/weights.mat")
 
-imageToUse = network.load_image(mnist, 5)
-'''plt.imshow(n.np.reshape(imageToUse,[28,28]), interpolation="nearest", cmap="gray")
-plt.show()'''
-
-network.getActivations(imageToUse, model)
+x = network.getActivations(x_train, model)
 
 plot = plots.DataViz()
 
-
-
+plot.plotHist(x, 0)
