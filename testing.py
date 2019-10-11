@@ -14,9 +14,13 @@ model = network.load_model("output/model.json")
 network.load_weights(model, "output/weights.mat")
 
 x = network.getActivations(x_train, model)
+y = network.getActivations2(x_train, model)
 
 plot = plots.DataViz()
 
-plot.plotHist(x, 0)
-f=network.predict_class(8, model, mnist)
+plot.plotHist(x, 3, 1)
+#plot.plotHist(y, 1, 2)
+plot.plotHist(x, 2, 1)
+#plot.plotHist(y, 2, 2)
+f = network.predict_class(8, model, mnist)
 print("the class is", f)

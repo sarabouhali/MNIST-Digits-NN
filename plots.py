@@ -4,13 +4,13 @@ import plotly.graph_objects as go
 
 class DataViz:
 
-    def plotHist(self, activations, unit):
+    def plotHist(self, activations, unit, layer):
         u_act=[i[unit] for i in activations]
         print (u_act)
         fig = go.Figure(data=[go.Histogram(x=u_act)])
         fig.update_layout(
             title=go.layout.Title(
-                text="Activations histogram",
+                text="Activations histogram for unit " +str(unit)+ " in the hidden layer" +str(layer),
                 xref="paper",
             ),
             xaxis=go.layout.XAxis(
@@ -112,7 +112,7 @@ class DataViz:
         fig.show()
         return
 
-    def plotWeights(self, w, node):
+    def plotWeights(self, w, node, layer):
         def unit_vector(vector):
             """ Returns the unit vector of the vector.  """
             return vector / np.linalg.norm(vector)
@@ -136,7 +136,7 @@ class DataViz:
         fig = go.Figure(data=go.Scatter(x=x, y=a))
         fig.update_layout(
             title=go.layout.Title(
-                text="Weights evolution through iterations",
+                text="Weights of hidden layer " + str(layer) + "," +str(node) +" evolution through iterations",
                 xref="paper",
             ),
             xaxis=go.layout.XAxis(
