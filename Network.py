@@ -81,7 +81,6 @@ class NN:
             i += 1
         return model
 
-
     def save_hidden_unit(self, model, json_path, iteration):  # Function to save the hidden unit activation and weight
         dict = {}
         weights = model.layers[1].get_weights()[1]
