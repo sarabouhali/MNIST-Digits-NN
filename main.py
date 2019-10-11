@@ -29,6 +29,6 @@ print('Test accuracy: ', accuracy)
 plot = plots.DataViz()
 
 plot.plotLoss(t_loss, v_loss)
-plot.plotWeights(w, 0)
+plot.plotWeights(w, 2)
 plot.plotAcc(acc, val_acc)
 

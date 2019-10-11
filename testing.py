@@ -18,3 +18,5 @@ x = network.getActivations(x_train, model)
 plot = plots.DataViz()
 
 plot.plotHist(x, 0)
+f=network.predict_class(8, model, mnist)
+print("the class is", f)

@@ -3,6 +3,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.python.keras.utils import to_categorical
 from scipy.io import loadmat, savemat
+import matplotlib.pyplot as plt
 import json
 
 
@@ -107,7 +108,7 @@ class NN:
         return x_train, y_train, x_val, y_val
 
     def train(self, model, trainx, trainy, val_split, batchsize): # Function to train our model iteratively
-        num_iters = int((len(trainy)+len(trainx))/batchsize)
+        num_iters = int((len(trainy))/batchsize) * 6
         total_iterations = 0
         time_before = datetime.now()
         w = []
@@ -163,7 +164,7 @@ class NN:
 
         return w, loss, val_loss, accuracy, val_acc
 
-    def getActivations(self, x_test, model):  # Function to save the activation function values for the hidden layer
+    def getActivations(self, data, model):  # Function to save the activation function values for the hidden layer
 
         x = 28*28
 
@@ -171,8 +172,19 @@ class NN:
             tf.keras.layers.Dense(units=32, input_shape=(x,), weights=model.layers[0].get_weights() ,activation='relu')
         ])
 
-        activations = model2.predict(x_test)
+        activations = model2.predict(data)
         return activations
+
+    def predict_class(self, i, model, dataset):
+        imageToUse = self.load_image(dataset, i)
+        plt.imshow(np.reshape(imageToUse, [28, 28]), interpolation="nearest", cmap="gray")
+        plt.show()
+
+        inp = np.reshape(imageToUse, (1, 784))
+        inp = inp / 255
+
+        preds = model.predict_classes(inp)
+        return preds
 
 
 
