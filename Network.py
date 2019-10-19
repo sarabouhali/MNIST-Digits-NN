@@ -2,7 +2,6 @@ from datetime import datetime
 import numpy as np
 import tensorflow as tf
 from tensorflow.python.keras.utils import to_categorical
-from tensorflow.keras.regularizers import l2
 from scipy.io import loadmat, savemat
 import matplotlib.pyplot as plt
 import json
@@ -35,7 +34,18 @@ class NN:
             tf.keras.layers.Dense(units=hidden_units2, activation=hidden_activation2, kernel_initializer=W_init),
             tf.keras.layers.Dense(units=num_classes, kernel_initializer=W_init, activation='softmax')
         ])
+
         print(model.summary())
+        return model
+
+    def create_dense(self, layer_sizes, num_classes, image_size):
+        model = tf.keras.models.Sequential()
+        model.add( tf.keras.layers.Dense(layer_sizes[0], activation='sigmoid', input_shape=(image_size,)))
+
+        for s in layer_sizes[1:]:
+            model.add( tf.keras.layers.Dense(units=s, activation='sigmoid'))
+
+        model.add( tf.keras.layers.Dense(units=num_classes, activation='softmax'))
         return model
 
     def save_model(self, model, json_path, weight_path):  # Function to save the model and its weights
@@ -119,6 +129,8 @@ class NN:
         val_loss = []
         accuracy = []
         val_acc = []
+        epoch = []
+        v_epoch = []
         print("Starting training ...")
 
         def load_train_batch(batch_size, train_x, train_y):
@@ -148,7 +160,9 @@ class NN:
             v_batch_loss = model.test_on_batch(V_inputs, V_targets)
 
             total_iterations += 1
-            #if it_num % 200 == 0 and it_num != 0:
+            if it_num % 450 == 0 and it_num != 0:
+                epoch.append(batch_loss[0])
+                v_epoch.append(v_batch_loss[0])
             print("Iteration ==> " + str(total_iterations) + " took: " + str(datetime.now() - time_before) + ", with loss of " + str(batch_loss[0]) + " and accuracy of " + str(batch_loss[1]))
             print("                    validation set loss of "+ str(v_batch_loss[0]) + " and validation accuracy of " + str(v_batch_loss[1]))
             weights = model.layers[1].get_weights()[0]
@@ -171,7 +185,7 @@ class NN:
 
         self.save_model(model, "output/model.json", "output/weights.mat")
 
-        return w, w2, loss, val_loss, accuracy, val_acc
+        return w, w2, loss, val_loss, accuracy, val_acc, epoch, v_epoch
 
     def getActivations(self, data, model):  # Function to save the activation function values for the hidden layer
 
@@ -189,7 +203,7 @@ class NN:
         x = 28*28
 
         model2 = tf.keras.models.Sequential([
-            tf.keras.layers.Dense(units=450, input_shape=(x,), weights=model.layers[0].get_weights(), activation='relu'),
+            tf.keras.layers.Dense(units=450, input_shape=(x,), weights=model.layers[0].get_weights(), activation='sigmoid'),
             tf.keras.layers.Dense(units=32, weights=model.layers[1].get_weights() ,activation='sigmoid')
         ])
 

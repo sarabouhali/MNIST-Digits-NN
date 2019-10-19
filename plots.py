@@ -37,7 +37,7 @@ class DataViz:
         fig.show()
         return
 
-    def plotLoss(self, loss, val_loss):
+    def plotLoss(self, loss, val_loss, i):
         fig = go.Figure()
         fig.add_trace(go.Scatter( y=loss,
                                  mode='lines',
@@ -52,7 +52,7 @@ class DataViz:
             ),
             xaxis=go.layout.XAxis(
                 title=go.layout.xaxis.Title(
-                    text="Iterations",
+                    text=i,
                     font=dict(
                         family="Courier New, monospace",
                         size=18,
