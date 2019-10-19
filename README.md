@@ -10,9 +10,6 @@ The figure below represents a random selection of MNIST digits on which the trai
 
 ![alt text](https://github.com/Sarabouh/MNIST-Digits-NN/blob/master/MNIST.png)
 
-This dataset contains some images that may be confusing as shown below, but will help build a more robust module.
-Sample of  misleading set of MNIST digits. 
-
 
 ## Data preprocessing :
 
