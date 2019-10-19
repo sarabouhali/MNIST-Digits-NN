@@ -8,7 +8,9 @@ The images of this dataset have a size of 28 x 28 pixel where each pixel has its
 The number of classes is 10 referring to the digits we want our model to recognize {0,1,2,3,4,5,6,7,8,9}.
 The figure below represents a random selection of MNIST digits on which the training and testing of the model will be done.
 
-![alt text](https://github.com/Sarabouh/MNIST-Digits-NN/blob/master/MNIST.png)
+<p align="center">
+  <img width="460" height="300" src="https://github.com/Sarabouh/MNIST-Digits-NN/blob/master/MNIST.png">
+</p>
 
 
 ## Data preprocessing :
